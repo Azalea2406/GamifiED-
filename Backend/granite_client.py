@@ -6,10 +6,10 @@ USE_MOCK = True
 def get_feedback_from_granite(user_input):
     if USE_MOCK:
         return random.choice([
-            "✅ Great explanation! You’ve got the concept.",
-            "🛠 Try elaborating more on step 2.",
-            "🧠 Good attempt! Consider checking the formula used.",
-            "🔁 Let's revise the logic in your second paragraph."
+            "✅ You’ve got the concept.",
+            "🛠 Check out more examples",
+            "🧠 Good attempt!",
+            "🔁 Revisit the concept"
         ])
     
     # Live IBM Granite API logic (not active for now)

@@ -1,4 +1,7 @@
 # backend/granite_client.py
+import random
+
+USE_MOCK = True
 
 def get_feedback_from_granite(user_input):
     if USE_MOCK:
@@ -9,9 +12,6 @@ def get_feedback_from_granite(user_input):
             "🔁 Let's revise the logic in your second paragraph."
         ])
     
-    # TODO: Connect to IBM Granite API here
-    # Example:
-    # response = granite_chain.invoke(user_input)
-    # return response.get("feedback")
+    # Live IBM Granite API logic (not active for now)
 
     return "⚠️ Live API not yet connected. Using mock feedback."

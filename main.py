@@ -1,9 +1,9 @@
 import streamlit as st
 from Authentication.login_page import login_page
-from ui.dashboard_page import learner_dashboard, get_user_xp, get_badge
-from ui.instructor_page import instructor_dashboard
-from ui.quests_page import quests_page
-from ui.profile_page import profile_page
+from UI.dashboard_page import learner_dashboard, get_user_xp, get_badge
+from UI.instructor_page import instructor_dashboard
+from UI.quests_page import quests_page
+from UI.profile_page import profile_page
 
 # Custom CSS for game look & feel
 def inject_game_css():

@@ -1,5 +1,5 @@
 import streamlit as st
-from backend.granite_client import get_feedback_from_granite  # AI feedback
+from Backend.granite_client import get_feedback_from_granite  # AI feedback
 
 def quests_page(user):
     st.title("🗡️ Quests")

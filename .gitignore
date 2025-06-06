@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
 firebase_config.py
 
 # C extensions

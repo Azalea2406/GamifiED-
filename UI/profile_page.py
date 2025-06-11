@@ -9,9 +9,16 @@ def profile_page(user):
 
     # --- Motivation Section ---
     motivation_prompt = f"Motivate a learner who has {total_xp} XP to keep learning."
-    with st.spinner("Fetching motivation..."):
+    if st.button("Get Motivation"):
         response = query_granite(motivation_prompt)
-    st.markdown("### 🧠 Motivation from Granite:")
+        st.success("🧠 Motivation from Granite:")
+        st.markdown(response[0]["generated_text"])
+        
+    """with st.spinner("Fetching motivation..."):
+        response = query_granite(motivation_prompt)
+    st.markdown("### 🧠 Motivation from Granite:") """
+
+    
     if isinstance(response, list):
         st.success(response[0]["generated_text"])
     else:

@@ -54,6 +54,21 @@ def instructor_dashboard():
         except Exception as e:
             st.error(f"Failed to assign course: {e}")
 
+    # Granite-assisted suggestion
+    st.markdown("---")
+    st.subheader("🤖 Course Suggestion Assistant")
+    query = st.text_input("Ask AI: What course should I assign next?")
+
+    if query:
+        from main import query_granite  # safely import your function here
+        with st.spinner("Thinking..."):
+            suggestion = query_granite(query)
+            if isinstance(suggestion, list):
+                st.success("💡 Granite Suggestion:")
+                st.markdown(suggestion[0]["generated_text"])
+            else:
+                st.warning("No response from Granite.")
+    
     # Step 3: View leaderboard
     st.subheader("🏆 Group Leaderboard")
     leaderboard = []

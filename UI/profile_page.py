@@ -1,4 +1,12 @@
 import streamlit as st
+from main import query_granite
+
+motivation_prompt = f"Motivate a learner who has {total_xp} XP to keep learning."
+response = query_granite(motivation_prompt)
+if isinstance(response, list):
+    st.info("🧠 Motivation from Granite:")
+    st.markdown(response[0]["generated_text"])
+
 
 def profile_page(user):
     st.title("👤 Player Profile")

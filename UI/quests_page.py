@@ -1,10 +1,10 @@
 import streamlit as st
-from Backend.granite_client import get_feedback_from_granite  # AI feedback
+from Backend.granite_client import get_feedback_from_granite as query_granite  # AI feedback
 
 def quests_page(user):
     st.title("🗡️ Quests")
 
-    # Example quests (you can load from DB or Firestore)
+    # Example quests (can be dynamically fetched from DB or API later)
     quests = [
         {"title": "Complete Lesson 1", "xp": 50, "completed": True},
         {"title": "Score 80% on Quiz 1", "xp": 100, "completed": False},
@@ -26,10 +26,12 @@ def quests_page(user):
         else:
             if st.button(f"Start Quest: {quest['title']}"):
                 st.info(f"🚀 Starting quest: {quest['title']}")
+
+                # 🔮 Generate user input prompt
+                user_input = f"User '{user.get('email', 'unknown')}' is starting the quest: {quest['title']}. Give feedback on their learning attempt."
                 
-                # 🔮 Get AI-generated feedback (mock or live in future)
-                user_input = f"{user['email']} attempting: {quest['title']}"
-                feedback = get_feedback_from_granite(user_input)
+                # 🧠 Call Granite model for feedback
+                feedback = query_granite(user_input)
 
                 st.markdown("### 🤖 AI Feedback")
                 st.success(feedback)

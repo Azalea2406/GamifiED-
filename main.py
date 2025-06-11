@@ -4,6 +4,7 @@ from UI.dashboard_page import learner_dashboard, get_user_xp, get_badge
 from UI.instructor_page import instructor_dashboard
 from UI.quests_page import quests_page
 from UI.profile_page import profile_page
+from Backend.granite_client import get_feedback_from_granite as query_granite
 
 import requests
 

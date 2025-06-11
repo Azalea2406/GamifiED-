@@ -1,19 +1,23 @@
 import streamlit as st
 from Backend.granite_utils import query_granite
 
-motivation_prompt = f"Motivate a learner who has {total_xp} XP to keep learning."
-response = query_granite(motivation_prompt)
-if isinstance(response, list):
-    st.info("🧠 Motivation from Granite:")
-    st.markdown(response[0]["generated_text"])
-
-
 def profile_page(user):
     st.title("👤 Player Profile")
 
     username = user.get("username") or user.get("email") or "Learner"
     total_xp = user.get("total_xp", 0)
 
+    # --- Motivation Section ---
+    motivation_prompt = f"Motivate a learner who has {total_xp} XP to keep learning."
+    with st.spinner("Fetching motivation..."):
+        response = query_granite(motivation_prompt)
+    st.markdown("### 🧠 Motivation from Granite:")
+    if isinstance(response, list):
+        st.success(response[0]["generated_text"])
+    else:
+        st.warning("Could not fetch AI response.")
+
+    # --- Profile Card UI ---
     st.markdown(f"""
     <div style="
         background: rgba(0,0,0,0.6);

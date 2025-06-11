@@ -5,10 +5,12 @@ from UI.instructor_page import instructor_dashboard
 from UI.quests_page import quests_page
 from UI.profile_page import profile_page
 from Backend.granite_client import get_feedback_from_granite as query_granite
-
+import os
 import requests
 
-HUGGINGFACE_API_TOKEN = "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"  # Replace with your real token
+HUGGINGFACE_API_TOKEN = os.getenv("HF_API_TOKEN")
+if not HUGGINGFACE_API_TOKEN:
+    raise ValueError("Missing Hugging Face API token in environment variables!")
 
 API_URL = "https://api-inference.huggingface.co/models/ibm-granite/granite-3.3-2b-instruct"
 headers = {

@@ -5,6 +5,27 @@ from UI.instructor_page import instructor_dashboard
 from UI.quests_page import quests_page
 from UI.profile_page import profile_page
 
+import requests
+
+HUGGINGFACE_API_TOKEN = "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"  # Replace with your real token
+
+API_URL = "https://api-inference.huggingface.co/models/ibm-granite/granite-3.3-2b-instruct"
+headers = {
+    "Authorization": f"Bearer {HUGGINGFACE_API_TOKEN}"
+}
+
+def query_granite(prompt):
+    payload = {
+        "inputs": prompt,
+        "parameters": {
+            "max_new_tokens": 256,
+            "temperature": 0.7,
+        }
+    }
+    response = requests.post(API_URL, headers=headers, json=payload)
+    return response.json()
+
+
 # Custom CSS for game look & feel
 def inject_game_css():
     st.markdown("""

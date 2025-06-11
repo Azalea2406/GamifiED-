@@ -8,21 +8,16 @@ def profile_page(user):
     total_xp = user.get("total_xp", 0)
 
     # --- Motivation Section ---
-    motivation_prompt = f"Motivate a learner who has {total_xp} XP to keep learning."
     if st.button("Get Motivation"):
+        motivation_prompt = f"Motivate a learner who has {total_xp} XP to keep learning."
         with st.spinner("Fetching motivation..."):
-        response = query_granite(motivation_prompt)
-        
-        st.success("🧠 Motivation from Granite:")
-        st.markdown(response[0]["generated_text"])
-        
-     
+            response = query_granite(motivation_prompt)
 
-    
-    if isinstance(response, list):
-        st.success(response[0]["generated_text"])
-    else:
-        st.warning("Could not fetch AI response.")
+        if isinstance(response, list):
+            st.success("🧠 Motivation from Granite:")
+            st.markdown(response[0]["generated_text"])
+        else:
+            st.warning("⚠️ Could not fetch AI response.")
 
     # --- Profile Card UI ---
     st.markdown(f"""

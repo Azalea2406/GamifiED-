@@ -1,5 +1,5 @@
 import streamlit as st
-from main import query_granite
+from Backend.granite_utils import query_granite
 
 motivation_prompt = f"Motivate a learner who has {total_xp} XP to keep learning."
 response = query_granite(motivation_prompt)

@@ -1,3 +1,4 @@
+import streamlit as st
 from Backend.granite_utils import query_granite
 
 def profile_page(user):

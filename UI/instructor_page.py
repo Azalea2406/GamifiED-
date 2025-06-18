@@ -2,6 +2,7 @@ import streamlit as st
 from firebase_config import db
 from Learning.course_data import COURSES
 import datetime
+from main import query_granite
 
 # Utility: Get all users with 'learner' role from Firebase
 def get_all_students():
@@ -40,7 +41,7 @@ def instructor_dashboard():
 
     # Step 2: Assign a course (mock functionality)
     st.subheader("📚 Assign Learning Path")
-    course_options = ["Python Basics", "Web Development"]
+    course_options = [course for course in COURSES]
     assigned_course = st.selectbox("Select a course to assign", course_options)
 
     if st.button("Assign Course"):
@@ -60,7 +61,6 @@ def instructor_dashboard():
     query = st.text_input("Ask AI: What course should I assign next?")
 
     if query:
-        from main import query_granite  # safely import your function here
         with st.spinner("Thinking..."):
             suggestion = query_granite(query)
             if isinstance(suggestion, list):
@@ -68,9 +68,12 @@ def instructor_dashboard():
                 st.markdown(suggestion[0]["generated_text"])
             else:
                 st.warning("No response from Granite.")
-    
-    # Step 3: View leaderboard
-    st.subheader("🏆 Group Leaderboard")
+
+# Streamlit UI for instructor leaderboard only
+def instructor_leaderboard():
+    st.title("🏆 Group Leaderboard")
+
+    students = get_all_students()
     leaderboard = []
     for uid, data in students.items():
         xp = get_user_xp(uid)
@@ -83,3 +86,8 @@ def instructor_dashboard():
 
     for i, entry in enumerate(sorted_leaderboard, start=1):
         st.write(f"**#{i}** - {entry['username']} | XP: {entry['xp']}")
+
+# Placeholder for instructor quests page
+def instructor_quests():
+    st.title("🗂️ Instructor Quests")
+    st.info("This page will allow instructors to assign and track quests for learners in the future.")

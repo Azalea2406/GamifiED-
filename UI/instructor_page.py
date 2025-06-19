@@ -79,10 +79,11 @@ def instructor_leaderboard_page():
         st.info("No XP data available yet.")
         return
 
+    st.subheader("📈 Leaderboard Rankings")
     for i, entry in enumerate(sorted_leaderboard, start=1):
         st.write(f"**#{i}** - {entry['username']} | XP: {entry['xp']}")
 
 # Instructor Quests Placeholder
 def instructor_quests_page():
     st.title("🧭 Instructor Quests Overview")
-    st.info("This section will allow instructors to track student quest progress, view submissions, and optionally create course-wide quests. Coming soon!")
+    st.info("Quests management tools for instructors will be available soon. This will allow you to view student quest submissions, track engagement, and assign new ones.")

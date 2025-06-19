@@ -1,11 +1,13 @@
 import streamlit as st
 from Backend.granite_utils import query_granite
+from UI.dashboard_page import get_user_xp 
 
 def profile_page(user):
     st.title("👤 Player Profile")
 
     username = user.get("username") or user.get("email") or "Learner"
-    total_xp = user.get("total_xp", 0)
+    user_id = user.get("user_id") or user.get("localId") or user.get("uid") or st.session_state.get("user", {}).get("uid")
+    total_xp = get_user_xp(user_id)
     badge = "🥇 Master" if total_xp >= 300 else "🥈 Expert" if total_xp >= 200 else "🥉 Intermediate" if total_xp >= 100 else "🎓 Beginner"
     course = user.get("course", "General Learning")
 

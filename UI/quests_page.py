@@ -75,7 +75,7 @@ def quests_page(user):
 
     st.markdown("---")
 
-    for quest in quests:
+    for i, quest in enumerate(quests):
         completed = quest in existing_quests
         with st.expander(f"📝 {quest} {'✅' if completed else ''}"):
             if completed:
@@ -84,8 +84,8 @@ def quests_page(user):
                 st.markdown(f"🕒 Completed on: {existing_quests[quest]['completed_at']}")
                 continue
 
-            user_input = st.text_area(f"✍️ Submit your response for: '{quest}'", key=f"input_{quest}")
-            if st.button(f"🚀 Submit Quest: {quest}", key=f"submit_{quest}"):
+            user_input = st.text_area(f"✍️ Submit your response for: '{quest}'", key=f"input_{i}")
+            if st.button(f"🚀 Submit Quest: {quest}", key=f"submit_{i}"):
                 if not user_input.strip():
                     st.warning("Please enter your work before submitting.")
                 else:

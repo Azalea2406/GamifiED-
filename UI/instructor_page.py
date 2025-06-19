@@ -2,7 +2,7 @@ import streamlit as st
 from firebase_config import db
 from Learning.course_data import COURSES
 import datetime
-from main import get_user_xp  # move this safely here
+from utils.xp_utils import get_user_xp
 
 # Utility: Get all users with 'learner' role from Firebase
 def get_all_students():

@@ -1,38 +1,43 @@
-# backend/granite_client.py
+# granite_client.py
+
 import requests
-import random
 import os
 
-# Toggle between mock or live Granite usage
-USE_MOCK = False  # Set to False to use Hugging Face live
+# WatsonX / IBM Granite Config
+GRANITE_API_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation"
+API_KEY = os.getenv("WATSONX_API_KEY") or "your_api_key_here"
 
-# Hugging Face API credentials (use environment variable for safety)
-HF_API_TOKEN = os.getenv("HF_API_TOKEN") or "your_huggingface_token_here"
-GRANITE_MODEL_URL = "https://api-inference.huggingface.co/models/ibm-granite/granite-13b-chat-v1"
+# Get IAM token from API Key
+def get_iam_token():
+    url = "https://iam.cloud.ibm.com/identity/token"
+    headers = {"Content-Type": "application/x-www-form-urlencoded"}
+    data = {
+        "apikey": API_KEY,
+        "grant_type": "urn:ibm:params:oauth:grant-type:apikey"
+    }
+    response = requests.post(url, headers=headers, data=data)
+    if response.status_code == 200:
+        return response.json()["access_token"]
+    else:
+        raise Exception(f"Failed to get token: {response.text}")
 
-HEADERS = {
-    "Authorization": f"Bearer {HF_API_TOKEN}"
-}
-
-def get_feedback_from_granite(user_input):
-    if USE_MOCK:
-        return random.choice([
-            "✅ You’ve got the concept.",
-            "🛠 Check out more examples",
-            "🧠 Good attempt!",
-            "🔁 Revisit the concept"
-        ])
-
-    try:
-        response = requests.post(
-            GRANITE_MODEL_URL,
-            headers=HEADERS,
-            json={"inputs": user_input, "options": {"wait_for_model": True}}
-        )
-        if response.status_code == 200:
-            output = response.json()
-            return output[0]["generated_text"]
-        else:
-            return f"⚠️ Error {response.status_code}: {response.text}"
-    except Exception as e:
-        return f"⚠️ Request failed: {e}"
+# Query Granite Model
+def get_feedback_from_granite(prompt, model_id="granite-13b-chat-v1"):
+    token = get_iam_token()
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model_id": model_id,
+        "input": prompt,
+        "parameters": {
+            "decoding_method": "greedy",
+            "max_new_tokens": 200
+        }
+    }
+    response = requests.post(GRANITE_API_URL, headers=headers, json=payload)
+    if response.status_code == 200:
+        return response.json()["results"][0]["generated_text"]
+    else:
+        return f"⚠️ Error {response.status_code}: {response.text}"

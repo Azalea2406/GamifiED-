@@ -29,7 +29,7 @@ def save_quest_completion(user_id, quest_title, user_input, feedback):
     })
 
 def quests_page(user):
-    st.title("🗡️ Quests")
+    st.title("🖑️ Quests")
     user_id = get_user_id(user)
     if not user_id:
         st.error("User ID not found.")
@@ -39,7 +39,8 @@ def quests_page(user):
     completed_quests = [q for q in existing_quests]
 
     st.markdown(f"**Progress:** {len(completed_quests)} / {len(STATIC_QUESTS)} quests completed")
-    st.progress(len(completed_quests) / len(STATIC_QUESTS))
+    progress_ratio = min(len(completed_quests) / len(STATIC_QUESTS), 1.0)
+    st.progress(progress_ratio)
     st.markdown("---")
 
     for i, quest in enumerate(STATIC_QUESTS):

@@ -28,6 +28,7 @@ def get_feedback_from_granite(prompt, model_id="granite-13b-chat-v1"):
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
     }
+    GRANITE_API_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2024-05-29"
     payload = {
         "model_id": model_id,
         "input": prompt,
@@ -41,3 +42,4 @@ def get_feedback_from_granite(prompt, model_id="granite-13b-chat-v1"):
         return response.json()["results"][0]["generated_text"]
     else:
         return f"⚠️ Error {response.status_code}: {response.text}"
+

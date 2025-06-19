@@ -2,16 +2,7 @@ import streamlit as st
 from firebase_config import db
 from Learning.course_data import COURSES
 import datetime
-
-# Utility: Get XP of a student
-def get_user_xp(user_id):
-    progress = db.child("progress").child(user_id).get().val()
-    total_xp = 0
-    if progress:
-        for course in progress.values():
-            for level in course.values():
-                total_xp += level.get("xp", 0)
-    return total_xp
+from main import get_user_xp  # move this safely here
 
 # Utility: Get all users with 'learner' role from Firebase
 def get_all_students():
@@ -84,11 +75,14 @@ def instructor_leaderboard_page():
 
     sorted_leaderboard = sorted(leaderboard, key=lambda x: x["xp"], reverse=True)
 
-    st.markdown("### Leaderboard:")
+    if not sorted_leaderboard:
+        st.info("No XP data available yet.")
+        return
+
     for i, entry in enumerate(sorted_leaderboard, start=1):
         st.write(f"**#{i}** - {entry['username']} | XP: {entry['xp']}")
 
 # Instructor Quests Placeholder
 def instructor_quests_page():
     st.title("🧭 Instructor Quests Overview")
-    st.info("This section will soon allow instructors to view or manage AI-generated quests for each course.")
+    st.info("This section will allow instructors to track student quest progress, view submissions, and optionally create course-wide quests. Coming soon!")

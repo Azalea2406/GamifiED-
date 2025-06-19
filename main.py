@@ -119,10 +119,16 @@ def main():
             profile_page(user)
 
     elif role == "Instructor":
-        if choice in ["Dashboard", "Leaderboard"]:  # reuse instructor_dashboard for now
+        if choice == "Dashboard":
             instructor_dashboard()
+        elif choice == "Leaderboard":
+            from UI.instructor_page import instructor_leaderboard_page
+            instructor_leaderboard_page()
         elif choice == "Profile":
             st.info("🧑‍🏫 Instructor profile coming soon!")
+        elif choice == "Quests":
+            from UI.instructor_page import instructor_quests_page
+            instructor_quests_page()
 
     else:
         st.error("⚠️ Unknown role detected.")

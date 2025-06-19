@@ -29,7 +29,7 @@ def save_quest_completion(user_id, quest_title, user_input, feedback):
     })
 
 def quests_page(user):
-    st.title("🖑️ Quests")
+    st.title("🗡️ Quests")
     user_id = get_user_id(user)
     if not user_id:
         st.error("User ID not found.")
